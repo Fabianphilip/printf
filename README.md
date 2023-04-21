@@ -37,7 +37,7 @@ Use a local buffer of 1024 chars in order to call write as little as possible.
 
 10. The negative is the equivalent of the composer's score, and the print the performance
 
-11. It's depressing when you're still around and your albums are out of print
+11. It's idepressing when you're still around and your albums are out of print
 
 12. Every time that I wanted to give up, if I saw an interesting textile, print what ever, suddenly I would see a collection
 
