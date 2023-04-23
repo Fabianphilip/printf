@@ -6,6 +6,8 @@ Name: Temi Ezebada & Fabian Philip
 Date: 21st April, 2023
 Cohort: 13
 
+COLLABORATOR: [getacupoftea] (https://github.com/getacupoftea)
+
 0. I'm not going anywhere. You can print that wherever you want to. I'm here and I'm a Spur for life
 mandatory
 Write a function that produces output according to a format.
