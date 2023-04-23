@@ -2,6 +2,8 @@
 
 c Group project
 
+COLLABORATOR: [getacupoftea](https://github.com/getacupoftea)
+
 Name: Temi Ezebada & Fabian Philip
 Date: 21st April, 2023
 Cohort: 13
