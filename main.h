@@ -63,7 +63,8 @@ int end_func(inventory_t *arg_inv);
 /* custom memory allocation and buffer */
 void *_calloc(unsigned int nmemb, unsigned int size);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
-
+void write_buffer(inventory_t *inv);
+void puts_buffer(inventory_t *inv, char *str);
 
 /* string functions */
 void rev_string(char *s);
