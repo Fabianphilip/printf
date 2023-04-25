@@ -1,46 +1,111 @@
 #include "main.h"
 
 /**
- * _printf - replication of some of the features from C function printf()
- * @format: character string of directives, flags, modifiers, & specifiers
+ * print_char - Prints a character to stdout
+ * @arg: A va_list containing a single character to print
  *
- * Return: number of characters printed
+ * Return: The number of characters printed (always 1)
+ */
+int print_char(va_list arg)
+{
+	char c = va_arg(arg, int);
+
+	return (write(1, &c, 1));
+}
+
+/**
+ * print_string - Prints a string to stdout
+ * @arg: A va_list containing a string to print
+ *
+ * Return: The number of characters printed
+ */
+int print_string(va_list arg)
+{
+	char *str = va_arg(arg, char *);
+	int count = 0;
+
+	if (str == NULL)
+		str = "(null)";
+
+	while (*str != '\0')
+	{
+		count += write(1, str, 1);
+		str++;
+	}
+
+	return (count);
+}
+
+/**
+ * print_integer - Prints an integer
+ * @arg: A va_list containing an integer to print
+ *
+ * Return: Number of characters printed
+ */
+int print_integer(va_list arg)
+{
+	int n = va_arg(arg, int);
+	int count = 0;
+	char c;
+
+	if (n < 0)
+	{
+		count += write(1, "-", 1);
+		n = -n;
+	}
+
+	if (n / 10)
+		count += print_integer(arg);
+
+	c = n % 10 + '0';
+
+	count += write(1, &c, 1);
+
+	return (count);
+}
+
+/**
+ * _printf - Prints a formatted string to the standard output
+ * @format: Format string
+ *
+ * Return: Number of characters printed
  */
 int _printf(const char *format, ...)
 {
-	va_list args_list;
-	inventory_t *inv;
-	void (*temp_func)(inventory_t *);
+	int count = 0;
+	va_list arg;
 
-	if (!format)
-		return (-1);
-	va_start(args_list, format);
-	inv = build_inventory(&args_list, format);
-	while (inv && format[inv->i] && !inv->error)
+	va_start(arg, format);
+
+	while (*format != '\0')
 	{
-		inv->c0 = format[inv->i];
-		if (inv->c0 != '%')
-			write_buffer(inv);
-		else
+		if (*format == '%')
 		{
-			parse_specifiers(inv);
-			temp_func = match_specifier(inv);
-			if (temp_func)
-				temp_func(inv);
-			else if (inv->c1)
+			format++;
+			switch (*format)
 			{
-				if (inv->flag)
-					inv->flag = 0;
-				write_buffer(inv);
-			}
-			else
-			{
-				if (inv->space)
-					inv->buffer[--(inv->buf_index)] = '\0';
-				inv->error = 1;
+				case 'c':
+					count += print_char(arg);
+					break;
+				case 's':
+					count += print_string(arg);
+					break;
+				case 'd':
+				case 'i':
+					count += print_integer(arg);
+					break;
+				default:
+					count += write(1, "%", 1);
+					count += write(1, format, 1);
+					break;
 			}
 		}
-		inv->i++;
+		else
+		{
+			count += write(1, format, 1);
+		}
+		format++;
 	}
-	return (end_func(inv));
+	va_end(arg);
+	return (count);
 }
