@@ -1,30 +1,29 @@
 #include "main.h"
-
 /**
- * print_char - prints a character to buffer or standard output
- * @args_inventory: the arguments inventory with commonly used arguments
- * Return: number of characters printed to buffer
+ * p_char - writes char to buffer or standard output
+ * @inv: the arguments inventory with most commonly used arguments
+ * Return: number of chars wrote to buffer
  */
-void print_char(inventory_t *args_inventory)
+void p_char(inventory_t *inv)
 {
-	args_inventory->char_arg = va_arg(*(args_inventory->args), int);
-	write_buffer(args_inventory);
+	inv->c0 = va_arg(*(inv->args), int);
+
+	write_buffer(inv);
 }
-
 /**
- * print_percent - prints a percent symbol to buffer or stdout
- * @args_inventory: the arguments inventory with commonly used arguments
- * Return: number of characters printed to buffer
+ * p_percent - writes a percent symbol to buffer or stdout
+ * @inv: the arguments inventory with most commonly used arguments
+ * Return: number of chars wrote to buffer
  */
-void print_percent(inventory_t *args_inventory)
+void p_percent(inventory_t *inv)
 {
-	args_inventory->char_arg = '%';
+	inv->c0 = '%';
 
-	if (args_inventory->space_flag)
+	if (inv->space)
 	{
-		args_inventory->space_flag = 0;
-		args_inventory->buffer[--(args_inventory->buffer_index)] = '\0';
+		inv->space = 0;
+		inv->buffer[--(inv->buf_index)] = '\0';
 	}
 
-	write_buffer(args_inventory);
+	write_buffer(inv);
 }
