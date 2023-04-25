@@ -1,23 +1,23 @@
-#include "main.h"
+#include "bootcamp.h"
 
 /**
- * print_hex - writes in base hexadecimal
+ * print_hex - writes in base hexidecimal
  * @inv: the arguments inventory with most commonly used arguments
- * @num: unsigned long int number to be converted
- * @hexcase: the hexadecimal case, either upper or lower
+ * @n: unsigned long int number to be converted
+ * @hexcase: the hexcase either upper or lower
  * @size: the size to be malloc'd
  */
-void print_hex(inventory_t *inv, unsigned long int num, int hexcase, int size)
+void print_hex(inventory_t *inv, unsigned long int n, int hexcase, int size)
 {
 	int i, j;
-	char *hex_str = NULL, *copy = NULL;
-	const char *hex_conv, *prefix;
-	static const char * const conv_set[] = {
+	char *hex = NULL, *copy = NULL;
+	const char *conv, *pre;
+	static const char * const convset[] = {
 		"0123456789abcdef", "0123456789ABCDEF", NULL };
-	static const char * const prefix_set[] = { "0x", "0X", NULL };
+	static const char * const preset[] = { "0x", "0X", NULL };
 
-	hex_conv = conv_set[hexcase];
-	if (!num)
+	conv = convset[hexcase];
+	if (!n)
 	{
 		inv->c0 = '0';
 		write_buffer(inv);
@@ -26,25 +26,25 @@ void print_hex(inventory_t *inv, unsigned long int num, int hexcase, int size)
 	{
 		if (inv->c1 == '#')
 		{
-			prefix = prefix_set[hexcase];
-			puts_buffer(inv, (char *)prefix);
+			pre = preset[hexcase];
+			puts_buffer(inv, (char *)pre);
 		}
-		hex_str = _calloc(size, sizeof(char));
-		if (hex_str)
+		hex = _calloc(size, sizeof(char));
+		if (hex)
 		{
-			for (i = 0; num; i++, num /= 16)
-				hex_str[i] = hex_conv[num % 16];
+			for (i = 0; n; i++, n /= 16)
+				hex[i] = conv[n % 16];
 			copy = _calloc(i + 1, sizeof(char));
 			if (copy)
 			{
 				for (j = 0, i--; i >= 0; j++, i--)
-					copy[j] = hex_str[i];
+					copy[j] = hex[i];
 				puts_buffer(inv, copy);
 				free(copy);
 			}
 			else
-				 inv->error = 1;
-			free(hex_str);
+				inv->error = 1;
+			free(hex);
 		}
 		else
 			inv->error = 1;
@@ -52,53 +52,53 @@ void print_hex(inventory_t *inv, unsigned long int num, int hexcase, int size)
 }
 
 /**
- * p_lowhex - writes unsigned integer to buffer in base hexadecimal downcase
+ * p_lowhex - writes unsigned integer to buffer in base hexidecimal downcase
  * @inv: the arguments inventory with most commonly used arguments
  */
 void p_lowhex(inventory_t *inv)
 {
-	unsigned int num;
+	unsigned int n;
 
-	num = va_arg(*(inv->args), int);
+	n = va_arg(*(inv->args), int);
 
-	print_hex(inv, (unsigned long int)num, HEX_LOWER, 9);
+	print_hex(inv, (unsigned long int)n, LOWHEX, 9);
 }
 
 /**
- * p_uphex - writes unsigned integer to buffer in base hexadecimal upcase
+ * p_uphex - writes unsigned integer to buffer in base hexidecimal upcase
  * @inv: the arguments inventory with most commonly used arguments
  */
 void p_uphex(inventory_t *inv)
 {
-	unsigned int num;
+	unsigned int n;
 
-	num = va_arg(*(inv->args), int);
+	n = va_arg(*(inv->args), int);
 
-	print_hex(inv, (unsigned long int)num, HEX_UPPER, 9);
+	print_hex(inv, (unsigned long int)n, UPHEX, 9);
 }
 
 /**
- * p_longlowhex - writes unsigned long int in base hexadecimal
+ * p_longlowhex - writes unsigned long int in base hexidecimal
  * @inv: the arguments inventory with most commonly used arguments
  */
 void p_longlowhex(inventory_t *inv)
 {
-	unsigned long int num;
+	unsigned long int n;
 
-	num = va_arg(*(inv->args), unsigned long int);
+	n = va_arg(*(inv->args), unsigned long int);
 
-	print_hex(inv, num, HEX_LOWER, 17);
+	print_hex(inv, n, LOWHEX, 17);
 }
 
 /**
- * p_longuphex - writes unsigned long integer in base hexadecimal upcase
+ * p_longuphex - writes unsigned long integer in base hexidecimal upcase
  * @inv: the arguments inventory with most commonly used arguments
  */
 void p_longuphex(inventory_t *inv)
 {
-	unsigned long int num;
+	unsigned long int n;
 
-	num = va_arg(*(inv->args), unsigned long int);
+	n = va_arg(*(inv->args), unsigned long int);
 
-	print_hex(inv, num, HEX_UPPER, 17);
+	print_hex(inv, n, UPHEX, 17);
 }
