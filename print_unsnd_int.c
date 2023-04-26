@@ -26,7 +26,6 @@ int print_unt(va_list arguments, char *buf, unsigned int ibuf)
 }
 
 
-#include "main.h"
 /**
  * prinhunt - prints a short unsigned integer
  * @arguments: number to print
@@ -57,7 +56,6 @@ int prinhunt(va_list arguments, char *buf, unsigned int ibuf)
 }
 
 
-#include "main.h"
 /**
  * prinlunt - prints a long unsigned integer
  * @arguments: number to print
